@@ -394,7 +394,7 @@ open class AudioPlayerManager: NSObject {
 			_currentTrack.loadResource()
 			if let _playerItem = _currentTrack.getPlayerItem() {
 				_currentTrack.prepareForPlaying(_playerItem)
-                _playerItem.asset.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
+                _playerItem.asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
                     self.player?.replaceCurrentItem(with: _playerItem)
                 })
 			}
