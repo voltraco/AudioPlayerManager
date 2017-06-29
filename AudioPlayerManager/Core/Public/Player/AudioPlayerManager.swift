@@ -335,6 +335,8 @@ open class AudioPlayerManager: NSObject {
 
 	fileprivate var player									: AVPlayer?
 
+    fileprivate var asset: AVAsset?
+
 	fileprivate var queue									= AudioTracksQueue()
 
 	fileprivate var didStopPlayback							= false
@@ -388,17 +390,18 @@ open class AudioPlayerManager: NSObject {
 			self.stop()
 		}
 
-		if let _currentTrack  = self.queue.currentTrack {
-			self.player = AVPlayer()
-			self.initPlayer()
-			_currentTrack.loadResource()
-			if let _playerItem = _currentTrack.getPlayerItem() {
-				_currentTrack.prepareForPlaying(_playerItem)
-                _playerItem.asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+        if let _currentTrack = self.queue.currentTrack {
+            self.player = AVPlayer()
+            self.initPlayer()
+            _currentTrack.loadResource()
+            if let _playerItem = _currentTrack.getPlayerItem() {
+                self.asset = _playerItem.asset
+                self.asset?.loadValuesAsynchronously(forKeys: ["tracks"], completionHandler: {
+                    _currentTrack.prepareForPlaying(_playerItem)
                     self.player?.replaceCurrentItem(with: _playerItem)
                 })
-			}
-		}
+            }
+        }
 	}
 
 	// MARK: Rewind
@@ -420,6 +423,7 @@ open class AudioPlayerManager: NSObject {
 	private func clearQueue() {
 		self.queue.replace(nil, at: 0)
 		self.queueGeneration += 1
+        self.asset = nil
 		self.player?.replaceCurrentItem(with: nil)
 	}
 
