@@ -368,6 +368,9 @@ open class AudioPlayerManager: NSObject {
 		}
 		self.player?.allowsExternalPlayback = true
 		self.player?.usesExternalPlaybackWhileExternalScreenIsActive = true
+        if #available(iOS 10.0, *) {
+            self.player?.automaticallyWaitsToMinimizeStalling = false
+        }
 	}
 
 	fileprivate func setupRemoteControlEvents() {
@@ -394,12 +397,18 @@ open class AudioPlayerManager: NSObject {
             self.player = AVPlayer()
             self.initPlayer()
             _currentTrack.loadResource()
-            if let _playerItem = _currentTrack.getPlayerItem() {
-                self.asset = _playerItem.asset
-                self.asset?.loadValuesAsynchronously(forKeys: ["tracks"], completionHandler: {
-                    _currentTrack.prepareForPlaying(_playerItem)
-                    self.player?.replaceCurrentItem(with: _playerItem)
-                })
+
+            DispatchQueue.global().async {
+                if let _playerItem = _currentTrack.getPlayerItem() {
+                    self.asset = _playerItem.asset
+                    self.asset?.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
+                        DispatchQueue.main.async {
+                            Log("trackLoadedAsynchronously")
+                            _currentTrack.prepareForPlaying(_playerItem)
+                            self.player?.replaceCurrentItem(with: _playerItem)
+                        }
+                    })
+                }
             }
         }
 	}
