@@ -138,7 +138,7 @@ open class AudioURLTrack: AudioTrack {
 
 	fileprivate func mediaItemArtwork(from image: UIImage) -> MPMediaItemArtwork {
 		if #available(iOS 10.0, *) {
-			return MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size: CGSize) -> UIImage in
+			return MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (_) -> UIImage in
 				return image
 			})
 		} else {

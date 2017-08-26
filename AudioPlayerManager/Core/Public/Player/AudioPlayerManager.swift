@@ -342,8 +342,8 @@ open class AudioPlayerManager: NSObject {
 	fileprivate var didStopPlayback							= false
 
 	// MARK: Callbacks
-	fileprivate var playStateChangeCallbacks				= Dictionary<String, [((_ track: AudioTrack?) -> (Void))]>()
-	fileprivate var playbackPositionChangeCallbacks			= Dictionary<String, [((_ track: AudioTrack) -> (Void))]>()
+	fileprivate var playStateChangeCallbacks                = [String: [((AudioTrack?) -> (Void))]]()
+	fileprivate var playbackPositionChangeCallbacks			= [String: [((AudioTrack) -> (Void))]]()
 
 	fileprivate var playbackPositionChangeTimer				: Timer?
 	fileprivate var stopPlaybackTimeChangeTimer				= false
@@ -353,8 +353,8 @@ open class AudioPlayerManager: NSObject {
 	// MARK: - Initializaiton
 
 	fileprivate func setupAudioSession() {
-		let _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-		let _ = try? AVAudioSession.sharedInstance().setActive(true)
+		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+		_ = try? AVAudioSession.sharedInstance().setActive(true)
 	}
 
 	fileprivate func initPlayer() {
