@@ -42,7 +42,6 @@ type_body_length:
   - 500 #error
 
 opt_in_rules:
-  - missing_docs
   - force_unwrapping
 
 identifier_name:
