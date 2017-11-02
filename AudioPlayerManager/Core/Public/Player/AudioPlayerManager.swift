@@ -402,8 +402,16 @@ open class AudioPlayerManager: NSObject {
                 if let _playerItem = _currentTrack.getPlayerItem() {
                     self.asset = _playerItem.asset
                     self.asset?.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
+                        let status = self.asset?.statusOfValue(forKey: "playable", error: nil)
+
+                        if status == .cancelled || self.didStopPlayback == true {
+                            self.asset?.cancelLoading()
+                            Log("[trackLoadedAsynchronously] playback cancelled")
+                            return
+                        }
+
                         DispatchQueue.main.async {
-                            Log("trackLoadedAsynchronously")
+                            Log("[trackLoadedAsynchronously] Playback starting…")
                             _currentTrack.prepareForPlaying(_playerItem)
                             self.player?.replaceCurrentItem(with: _playerItem)
                         }
