@@ -404,8 +404,8 @@ open class AudioPlayerManager: NSObject {
                     self.asset?.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
                         let status = self.asset?.statusOfValue(forKey: "playable", error: nil)
 
-                        if status == .cancelled || self.didStopPlayback == true {
-                            self.asset?.cancelLoading()
+                        guard status == .loaded || status == .unknown else {
+//                            self.asset?.cancelLoading()
                             Log("[trackLoadedAsynchronously] playback cancelled")
                             return
                         }
