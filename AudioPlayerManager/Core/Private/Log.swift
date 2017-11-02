@@ -10,6 +10,7 @@ import UIKit
 
 // MARK: - Log
 
+//swiftlint:disable identifier_name
 func Log(_ message: String = "", file: String = #file, function: String = #function, line: Int = #line) {
 	if (AudioPlayerManager.verbose == true) {
 		if (AudioPlayerManager.detailedLog == true),
