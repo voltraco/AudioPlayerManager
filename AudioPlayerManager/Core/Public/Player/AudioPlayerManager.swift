@@ -341,6 +341,8 @@ open class AudioPlayerManager: NSObject {
 
 	fileprivate var didStopPlayback							= false
 
+    fileprivate var operation: Operation?
+
 	// MARK: Callbacks
 	fileprivate var playStateChangeCallbacks                = [String: [((AudioTrack?) -> (Void))]]()
 	fileprivate var playbackPositionChangeCallbacks			= [String: [((AudioTrack) -> (Void))]]()
@@ -398,25 +400,13 @@ open class AudioPlayerManager: NSObject {
             self.initPlayer()
             _currentTrack.loadResource()
 
+            let queue = AudioPlayerManager.operationQueue
+
             DispatchQueue.global().async {
-                if let _playerItem = _currentTrack.getPlayerItem() {
-                    self.asset = _playerItem.asset
-                    self.asset?.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
-                        let status = self.asset?.statusOfValue(forKey: "playable", error: nil)
+                let _operation = AudioPreloadOperation(track: _currentTrack, player: self.player!, queue: queue)
 
-                        guard status == .loaded || status == .unknown else {
-//                            self.asset?.cancelLoading()
-                            Log("[trackLoadedAsynchronously] playback cancelled")
-                            return
-                        }
-
-                        DispatchQueue.main.async {
-                            Log("[trackLoadedAsynchronously] Playback starting…")
-                            _currentTrack.prepareForPlaying(_playerItem)
-                            self.player?.replaceCurrentItem(with: _playerItem)
-                        }
-                    })
-                }
+                self.operation = _operation
+                queue.addOperation(_operation)
             }
         }
 	}
@@ -441,8 +431,17 @@ open class AudioPlayerManager: NSObject {
 		self.queue.replace(nil, at: 0)
 		self.queueGeneration += 1
         self.asset = nil
+        self.operation = nil
 		self.player?.replaceCurrentItem(with: nil)
 	}
+
+    // MARK: - Operation Queue
+
+    private static var operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
 
 	// MARK: - Plaback time change callback
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		341544491FB20BF30081E99E /* AudioPreloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341544481FB20BF30081E99E /* AudioPreloadOperation.swift */; };
 		3A48663D1D50B5BA00CC4A04 /* AudioPlayerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A48663C1D50B5BA00CC4A04 /* AudioPlayerManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A4866431D50B80400CC4A04 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4866421D50B80400CC4A04 /* MediaPlayer.framework */; };
 		3A7BFA411D9EC5DA007E521D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BFA3E1D9EC5DA007E521D /* Log.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		341544481FB20BF30081E99E /* AudioPreloadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreloadOperation.swift; sourceTree = "<group>"; };
 		3A48660C1D50A7D700CC4A04 /* AudioPlayerManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AudioPlayerManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A48663C1D50B5BA00CC4A04 /* AudioPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayerManager.h; sourceTree = "<group>"; };
 		3A48663E1D50B6A000CC4A04 /* AudioPlayerManager-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AudioPlayerManager-Info.plist"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				3A7BFA3E1D9EC5DA007E521D /* Log.swift */,
 				3A7BFA3F1D9EC5DA007E521D /* AudioTracksQueue.swift */,
 				3A7BFA401D9EC5DA007E521D /* MediaLibraryHelper.swift */,
+				341544481FB20BF30081E99E /* AudioPreloadOperation.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				3ACAE0F81D52403F009B20AD /* MediaPlayerTrack.swift in Sources */,
 				3ACAE0F51D52403F009B20AD /* AudioPlayerManager+URL.swift in Sources */,
 				3A7BFA431D9EC5DA007E521D /* MediaLibraryHelper.swift in Sources */,
+				341544491FB20BF30081E99E /* AudioPreloadOperation.swift in Sources */,
 				3ACAE0F21D52403F009B20AD /* MPMediaItem+AudioPlayerManager.swift in Sources */,
 				3ACAE0F41D52403F009B20AD /* AudioPlayerManager+RemoteControl.swift in Sources */,
 				3ACAE0F31D52403F009B20AD /* AudioPlayerManager+MPMediaItem.swift in Sources */,

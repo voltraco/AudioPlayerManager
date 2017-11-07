@@ -115,7 +115,7 @@ open class AudioURLTrack: AudioTrack {
 	}
 
 	fileprivate func extractMetadata() {
-		Log("Extracting meta data of player item with url: \(url)")
+		Log("Extracting meta data of player item with url: \(url?.absoluteString)")
 		for metadataItem in (self.playerItem?.asset.commonMetadata ?? []) {
 			if let _key = metadataItem.commonKey {
 				switch _key {
